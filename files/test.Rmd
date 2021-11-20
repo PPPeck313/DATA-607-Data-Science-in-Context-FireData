@@ -1,0 +1,122 @@
+---
+title: "DATA 606 - Lab 1 - Intro to R"
+author: "Preston Peck"
+date: "`r Sys.Date()`"
+output: openintro::lab_report
+---
+
+# Introduction to R and RStudio
+
+<https://htmlpreview.github.io/?https://github.com/jbryer/DATA606/blob/master/inst/labs/Lab1/Lab1_intro_to_r.html>
+
+```{r load-packages, message=FALSE}
+library(tidyverse)
+library(openintro)
+```
+
+### Exercise 1
+
+```{r view-girls-counts}
+arbuthnot$girls
+```
+
+
+### Exercise 2
+
+From 1630 to 1700, the number of girls being baptized doubled. Overall the number if girls being baptized is increasing
+
+```{r trend-girls}
+ggplot(data = arbuthnot, aes(x = year, y = girls)) + geom_line()
+```
+
+
+### Exercise 3
+
+The percentage of babies that are boys being baptized understandably slightly fluctuates around 50% over the years. This would make sense being that half of the world's population is male
+
+```{r plot-prop-boys-arbuthnot}
+arbuthnot <- arbuthnot %>%
+  mutate(total = boys + girls)
+
+arbuthnot <- arbuthnot %>%
+  mutate(boy_ratio = boys / total)
+
+ggplot(data = arbuthnot, aes(x = year, y = boy_ratio)) + geom_line()
+```
+
+
+### Exercise 4
+
+The present data frame has data between and including the years 1940 to 2002
+The present frame has 63 rows and 3 columns
+The present frame columns are year, number of boys, and number of girls
+
+```{r dim-present}
+present$year
+arbuthnot$year
+
+dim(present)
+
+names(present)
+```
+
+
+### Exercise 5
+
+The ratios of boys and girls being born between the years 1940 and 2002 (62 years) are exactly the same as those being baptized between the years 1629 and 1710 (81 years). There were 247 times more births occurring than baptisms between the sets.
+
+```{r count-compare}
+present <- present %>%
+  mutate(total = boys + girls)
+
+compareDataFrames <- data.frame(
+  boys = rep(NA, 2), 
+  girls = rep(NA, 2), 
+  total = rep(NA, 2), 
+  boys_ratio = rep(NA, 2)
+)
+
+compareDataFrames[1,] <- c(
+  colSums(arbuthnot[,c(-1,-5)]), 
+  sum(arbuthnot$boys) / sum(arbuthnot$total)
+)
+
+compareDataFrames[2,] <- c(
+  colSums(present[,-1]),
+  sum(present$boys) / sum(present$total)
+)
+
+rownames(compareDataFrames) <- c("arbuthnot", "present")
+compareDataFrames
+
+presentToArbuthnotTotalRatio <- compareDataFrames$total[2] / compareDataFrames$total[1]
+presentToArbuthnotTotalRatio
+```
+
+
+### Exercise 6
+
+Arbuthnot’s observation about boys being born in greater proportion than girls still holds up in the U.S being that for every year in the birth set, the percentage of boys being born remained over 50%
+
+```{r plot-prop-boys-present}
+present <- present %>%
+  mutate(boy_ratio = boys / total)
+
+ggplot(data = present, aes(x = year, y = boy_ratio)) + geom_line()
+```
+
+
+### Exercise 7
+
+The year with the most births in the U.S. was 1961
+
+```{r find-max-total}
+totals <- rbind(arbuthnot[,c(1,4)], present[,c(1,4)])
+
+totals %>%
+  arrange(desc(total))
+
+maxTotal <- totals[which.max(totals$total),]
+maxTotal
+```
+

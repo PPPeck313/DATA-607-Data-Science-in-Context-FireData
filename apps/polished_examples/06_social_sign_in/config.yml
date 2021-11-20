@@ -1,0 +1,6 @@
+default:
+  api_key: "SCXQHNAMChGF8mUvuvQfoniMPVLx9UD08V"
+  firebase:
+    apiKey: "AIzaSyBJJSv6pY0umm9fupWB96EKSg6zwe8TIGM"
+    authDomain: "firedata-7965f.firebaseapp.com/"
+    projectId: "firedata-7965f"

@@ -1,0 +1,145 @@
+---
+title: "Data Science in Context: FireData"
+author: "Preston Peck"
+date: "11/7/2021"
+output: html_document
+---
+
+```{r setup}
+library(fireData)
+library(firebase)
+library(funr)
+```
+
+```{r keys}
+apiKey <- ""
+projectId <- ""
+
+authDomain <- ""
+authUrl <- ""
+localHost <- "127.0.0.1"
+
+rtdUrl <- ""
+node <- "mtcars"
+
+storageBucket <- ""
+storageBucketUrl <- ""
+storageFolder <- "files"
+storageFile <- "files/test.html"
+appId <- ""
+
+markdownFile <- "test.Rmd"
+htmlFile <- "test.html"
+path <- funr::get_script_path()
+fullPath <- paste(path, htmlFile, sep = "/")
+
+messagingSenderId <- ""
+measurementId <- ""
+
+clientId <- ""
+clientSecret <- ""
+
+domain <- ""
+testLink <- ""
+testLinkFull <- ""
+``` 
+
+```{r config}
+#firebase_config(
+#  apiKey,
+#  projectId,
+#  auth_domain = authDomain,
+#  storage_bucket = storageBucket,
+#  app_id = appId,
+#  overwrite = TRUE
+#)
+```
+
+```{r auth}
+# Anonymous
+#token <- anonymous_login(project_api = apiKey)
+#token
+#token$idToken
+
+
+
+# Email
+#createUser(apiKey, email = "test2@test.com", password = "test123")
+
+# Google
+# Must be run in browser for launch and redirect
+#gToken <- google_login(project_api = apiKey, 
+#                       web_client_id = clientId,
+#                       web_client_secret = clientSecret,
+#                       request_uri = authDomain)
+#gToken
+#gToken$oauthIdToken
+```
+
+```{r dynamicLink}
+dynamicLink <- get_dynamic_link(project_api = apiKey, 
+                                link = testLink, 
+                                domain = domain)
+dynamicLink
+```
+
+```{r realtime}
+#upload <- upload(x = mtcars,
+#                 projectURL = rtdUrl, 
+#                 directory = node)
+#upload
+#
+
+
+#download <- download(projectURL = rtdUrl, 
+#                     fileName = upload)
+#download
+
+
+
+#put <- put(x = mtcars,
+#           projectURL = rtdUrl, 
+#           directory = upload)
+#put
+
+
+
+#patch <- patch(x = mtcars,
+#               projectURL = rtdUrl, 
+#               directory = upload)
+#patch
+
+
+
+#delete <- delete(x = mtcars,
+#                  projectURL = rtdUrl, 
+#                  directory = upload)
+#delete
+```
+
+```{r cloudStorageAuth}
+# Try to launch in browser, localhost? Google auth not working?
+#out_path <- rmarkdown::render(markdownFile)
+#browseURL(out_path)
+
+
+
+#token <- google_devstorage_read_write(web_client_id = clientId,
+#                                      web_client_secret = clientSecret)
+#token
+```
+
+```{r cloudStorage}
+# Not working, maybe because of Google auth?
+#metadata <- deploy_rmarkdown(rmarkdown_path = markdownFile,
+#                             bucket_name = storageBucket,
+#                             object_name = storageFolder,
+#                             web_client_id = clientId,
+#                             web_client_secret = clientSecret)
+#metadata
+
+#uploadStorage <- upload_storage(bucket_name = storageBucket,
+#                                object_name = htmlFile, 
+#                                file_path =  fullPath)
+#uploadStorage
+```

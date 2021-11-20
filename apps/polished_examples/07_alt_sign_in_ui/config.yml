@@ -1,0 +1,6 @@
+default:
+  api_key: ""
+  firebase:
+    apiKey: ""
+    authDomain: ""
+    projectId: ""
